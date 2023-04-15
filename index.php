@@ -4,11 +4,7 @@ declare(strict_types=1);
 namespace App;
 include_once ('./src/utils/debug.php');
 
-if (!empty($_GET['action'])) {
-    $action = $_GET['action']; //$action = 'create'
-} else {
-    $action = null;
-}
+$action =$GET['action']?? null;
 
 ?> 
 <!DOCTYPE html>
@@ -35,6 +31,7 @@ if (!empty($_GET['action'])) {
         <h3>Nowa notatka</h3>
         <?php else : ?>
             <h3>Lista notatek</h3>
+            <?php echo htmlentities($action ?? '') ?>
             <?php endif; ?>
         </article>
         </main>
