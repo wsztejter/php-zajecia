@@ -10,15 +10,15 @@ require_once('./src/Database.php');
 
 class Controller{
     const DEFAULT_ACTION = 'list';
-    private array $getData;
-private array $postData;
+private array $request;
 private static $configuration = [];
 private Database $database;
+private View $view;
 
-public function __construct(array $getData, array $postData)
+public function __construct(array $request)
 {
-    $this->getData = $getData;
-    $this->postData = $postData;
+    $this->request = $request;
+   $this->view = new View();
     $this->database = new Database(self::$configuration);
 }
 public static function initConfiguration(array $configuration): void 
@@ -27,30 +27,35 @@ public static function initConfiguration(array $configuration): void
 
 }
 public function run(): void
-{
-    $action =$this->getData['action'] ?? self::DEFAULT_ACTION;
-    $view = new View();
-
-    $viewParams=[];
-    switch ($action) {
+{ $viewParams=[];
+    switch ($this->action()) {
         case 'create':
             $page = 'create';
-            $created = false;
-            if (!empty($this->postData)) {
-                $viewParams = [
-                    'title' => $this->postData['title'], 'description' => $this->postData['description'],
+            $data = $this->getRequestPost();
+            if (!empty($data)) {
+               $created = true;
+                $noteData = [
+                    'title' => $data['title'], 'description' => $data['description'],
                 ];
-               
-                $created = true;
-                $this->database->createNote($viewParams);
+                $this->database->createNote($noteData);
+                header('Location: /?before=created');
             }
-            $viewParams['created'] = $created;
             break;
-
             default:
             $page = 'list';
-            $viewParams['resultList']= 'Wyświetlamy listę notatek';
+            $data=$this->getRequestGet();
+            $viewParams['before']= $data['before']?? null;
     }
-    $view->render($page, $viewParams);
+    $this->view->render($page, $viewParams);
+}
+private function action(): string{
+    $data =$this->getRequestGet();
+    return $data['action'] ?? self::DEFAULT_ACTION;
+}
+private function getRequestPost(): array{
+    return $this->request['post'] ?? [];
+}
+private function getRequestGet(): array{
+    return $this->request['get'] ?? [];
 }
 }
