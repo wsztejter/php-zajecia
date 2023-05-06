@@ -1,8 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App;
-class Request{
+
+class Request
+{
     private array $get = [];
     private array $post = [];
     public function __construct(array $get, array $post)
@@ -10,13 +13,16 @@ class Request{
         $this->get = $get;
         $this->post = $post;
     }
-    public function hasPost(): bool{
+    public function hasPost(): bool
+    {
         return !empty($this->post);
     }
-    public function getParam(string $name, $default = null){
-        return $this-> get[$name] ?? $default;
+    public function getParam(string $name, $default = null)
+    {
+        return $this->get[$name] ?? $default;
     }
-    public function postParm(string $name, $default = null){
+    public function postParam(string $name, $default = null)
+    {
         return $this->post[$name] ?? $default;
     }
 }
