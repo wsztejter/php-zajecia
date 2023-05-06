@@ -23,7 +23,7 @@ controller::initConfiguration($configuration);
 $controller = new Controller($request);
 $controller->run();}
 catch(AppException $e){
-echo "<h1>Wystąpił błąd w aplikacji</h1>";
+echo "<h1>Wystąpił błąd w aplikacji</h1>"; 
 echo '<h3>' .$e->getMessage() . '</h3>';
 }catch (Throwable $e){
     echo "<h1>Wystąpił błąd w aplikacji</h1>";
