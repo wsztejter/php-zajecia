@@ -78,6 +78,15 @@ public function editNote(int $id, array $data)
     }
 }
 
+public function deleteNote($id): void{
+try{
+    $query = "DELETE FROM notes WHERE id=$id LIMIT 1";
+    $this->conn->exec($query);
+}
+catch (Throwalbe $e) {
+    throw new StorageException("Nie udalo sie usunac notatki", 400, $e);
+}
+}
 
 private function createConnection(array $config): void
 {
