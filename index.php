@@ -1,6 +1,8 @@
 <?php 
 declare(strict_types=1);
 
+namespace App;
+
 spl_autoload_register(function (string $name){
 $name = str_replace(['\\', 'App/'], ['/',''], $name);
 $path = "src/$name.php";
@@ -28,5 +30,5 @@ catch(AppException $e){
 echo "<h1>Wystąpił błąd w aplikacji</h1>";
 echo '<h3>' .$e->getMessage();'</h3>';
 }catch (\Throwable $e){
-    echo "<h1>Wystąpił błąd w aplikacji</h1>";var_dump($e);
+    echo "<h1>Wystąpił błąd w aplikacji</h1>";
 }
