@@ -2,9 +2,7 @@
 <div>
     <?php if (!empty($params['note'])) : ?>
         <?php
-        var_dump($params);
-        $note = $params['note'];
-        dump($params); ?>
+        $note = $params['note']; ?>
         <form action="/?action=edit" class="note-form" method = "post">
             <input type="text" name="id" value ="<?php echo $note['id'] ?>" />
             <ul>
